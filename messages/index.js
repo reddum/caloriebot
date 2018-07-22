@@ -26,7 +26,7 @@ bot.localePath(path.join(__dirname, './locale'));
 bot.set('storage', tableStorage);
 
 bot.dialog('/', function (session) {
-    session.send('You said ' + session.message.text);
+    session.send('You said::: ' + session.message.text);
 });
 
 if (useEmulator) {
