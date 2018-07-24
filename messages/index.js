@@ -81,7 +81,9 @@ if (predictionKey == null) {
 var imageDetection = function(session, name, url) {
 
     session.send("name", name)
-    session.send("url", url)
+    session.send(name)
+    session.send("url", url) 
+    session.send(url)
     var headers = {
         'Prediction-Key': predictionKey,
         'Content-Type': 'application/octet-stream'
@@ -95,7 +97,8 @@ var imageDetection = function(session, name, url) {
                 processDetectionInfo(session, info);
             }
             else {
-                session.send("response.statusCode", response.statusCode);
+                session.send("response.statusCode")
+                session.send(response.statusCode);
                 console.log(response.statusCode)
             }
         })
