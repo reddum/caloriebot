@@ -82,12 +82,13 @@ var imageDetection = function(session, name, url) {
 
     var myPromise = new Promise(function(resolve, reject){
         session.send(url)
+
         var headers = {
             'Prediction-Key': predictionKey,
             'Content-Type': 'application/octet-stream'
         }
 
-        request.get(url).pipe(
+        request.get("http://s.newtalk.tw/album/news/107/5a2f45b24880e.jpg").pipe(
             request.post({ url: PredictImage, headers: headers }, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
