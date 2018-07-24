@@ -15,7 +15,7 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
 var boxTagName = '便當';
 var foodTable = {
    '青菜': {
-      'display': 'Vegetables',
+      'display': 'vegetables',
       'calorie': 75
    },
    '便當': {
@@ -23,7 +23,7 @@ var foodTable = {
       'calorie': 705
    },
    '港式叉燒': {
-      'display': 'Hong Kong-style Pork Roast',
+      'display': 'Hong Kong-style pork roast',
       'calorie': 392
    },
    '滷排骨': {
@@ -31,19 +31,19 @@ var foodTable = {
       'calorie': 131
    },
    '炸排骨': {
-      'display': 'Fried ribs',
+      'display': 'fried ribs',
       'calorie': 88
    },
    '炸雞腿': {
-      'display': 'Fried chicken',
+      'display': 'fried chicken',
       'calorie': 246
    },
    '烤雞腿': {
-      'display': 'Roast chicken',
+      'display': 'roast chicken',
       'calorie': 101
    },
    '荷包蛋': {
-      'display': 'Poached egg',
+      'display': 'poached egg',
       'calorie': 91
    },
    '蛋': {
@@ -51,11 +51,11 @@ var foodTable = {
       'calorie': 85
    },
    '豆乾': {
-      'display': 'Dried bean',
+      'display': 'dried bean',
       'calorie': 88
    },
    '魚排': {
-      'display': 'Fish steak',
+      'display': 'fish steak',
       'calorie': 75
    }
 };
