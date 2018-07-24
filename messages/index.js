@@ -103,6 +103,7 @@ var imageDetection = function(session, name, url) {
         //         }
         //     })
         // )
+
         setTimeout(function(){
             session.send("pass");
             resolve();
