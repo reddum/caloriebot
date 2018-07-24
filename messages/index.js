@@ -95,6 +95,7 @@ var imageDetection = function(session, name, url) {
             session.send(response) // 200
           })
         .on('error', function(err) {
+            session.send('error')
             session.send(err)
           })
         .pipe(
