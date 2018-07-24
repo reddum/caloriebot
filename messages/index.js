@@ -81,28 +81,29 @@ if (predictionKey == null) {
 var imageDetection = function(session, name, url) {
 
     var myPromise = new Promise(function(resolve, reject){
-        session.send(url)
+        // session.send(url)
         
-        var headers = {
-            'Prediction-Key': predictionKey,
-            'Content-Type': 'application/octet-stream'
-        }
+        // var headers = {
+        //     'Prediction-Key': predictionKey,
+        //     'Content-Type': 'application/octet-stream'
+        // }
 
-        request.get(url).pipe(
-            request.post({ url: PredictImage, headers: headers }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var info = JSON.parse(body);
-                    console.log(info);
-                    processDetectionInfo(session, info);
-                    resolve()
-                }
-                else {
-                    session.send("response.statusCode")
-                    session.send(response.statusCode);
-                    console.log(response.statusCode)
-                }
-            })
-        )
+        // request.get(url).pipe(
+        //     request.post({ url: PredictImage, headers: headers }, function (error, response, body) {
+        //         if (!error && response.statusCode == 200) {
+        //             var info = JSON.parse(body);
+        //             console.log(info);
+        //             processDetectionInfo(session, info);
+        //             resolve()
+        //         }
+        //         else {
+        //             session.send("response.statusCode")
+        //             session.send(response.statusCode);
+        //             console.log(response.statusCode)
+        //         }
+        //     })
+        // )
+        setTimeout(function(){session.send("pass"), 3000})
     })
     Promise.all([myPromise]).then(function() {
         session.send("done")
