@@ -80,8 +80,7 @@ if (predictionKey == null) {
 
 var imageDetection = function(session, name, url) {
 
-    session.send("name")
-    session.send("url") 
+    session.send("url")
     session.send(url)
     var headers = {
         'Prediction-Key': predictionKey,
@@ -157,8 +156,8 @@ var bot = new builder.UniversalBot(connector, function (session) {
     var msg = session.message;
     if (msg.attachments && msg.attachments.length > 0) {
         // Echo back attachment
-        var attachment = msg.attachments[0];
-        imageDetection(session, attachment.name, attachment.contentUrl)
+        session.beginDialog('calculate');
+        
     } else {
         if (msg.text.includes("show")) {
             session.send("Please see the report");
@@ -166,6 +165,15 @@ var bot = new builder.UniversalBot(connector, function (session) {
         }   
     }
 });
+
+bot.dialog('calculate', [
+    function (session, args, next) {
+        var msg = session.message;
+        var attachment = msg.attachments[0];
+        imageDetection(session, attachment.name, attachment.contentUrl)
+    },
+]);
+
 
 if (useEmulator) {
     var restify = require('restify');
