@@ -81,10 +81,7 @@ if (predictionKey == null) {
 var imageDetection = function(session, name, url) {
 
     var myPromise = new Promise(function(resolve, reject){
-        session.send("here")
-        session.send("here1")
-        session.send("here2")
-        
+
         var headers = {
             'Prediction-Key': predictionKey,
             'Content-Type': 'application/octet-stream'
@@ -92,11 +89,9 @@ var imageDetection = function(session, name, url) {
 
         request
         .get({url: url},function (error, response, body) {
-            session.send("get response")
         })
         .pipe(
             request.post({ url: PredictImage, headers: headers }, function (error, response, body) {
-                session.send("post response")
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     console.log(info);
@@ -112,10 +107,7 @@ var imageDetection = function(session, name, url) {
         )
     })
     Promise.all([myPromise]).then(function() {
-        session.send("done")
     })
-    session.send("here")
-    
 }
 
 var calculateCalorie = function(predictions) {
@@ -160,7 +152,6 @@ var calculateCalorie = function(predictions) {
 }
 
 var processDetectionInfo = function(session, result) {
-    session.send("processDetectionInfo")
    var foods = []
    var calculateResult = calculateCalorie(result.predictions);
    session.send("I found foods " + calculateResult.tags.join(',') + ", total calories are " + calculateResult.totalCalorie);
@@ -169,10 +160,9 @@ var processDetectionInfo = function(session, result) {
 // Create your bot with a function to receive messages from the user
 var bot = new builder.UniversalBot(connector, function (session) {
     var msg = session.message;
+    var attachment = msg.attachments[0];
     if (msg.attachments && msg.attachments.length > 0) {
-        // Echo back attachment
-        session.beginDialog('calculate');
-        
+        imageDetection(session, attachment.name, attachment.contentUrl)
     } else {
         if (msg.text.includes("show")) {
             session.send("Please see the report");
@@ -180,15 +170,6 @@ var bot = new builder.UniversalBot(connector, function (session) {
         }   
     }
 });
-
-bot.dialog('calculate', [
-    function (session, args, next) {
-        var msg = session.message;
-        var attachment = msg.attachments[0];
-        imageDetection(session, attachment.name, attachment.contentUrl)
-    },
-]);
-
 
 if (useEmulator) {
     var restify = require('restify');
