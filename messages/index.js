@@ -80,6 +80,8 @@ if (predictionKey == null) {
 
 var imageDetection = function(session, name, url) {
 
+    session.send("name", name)
+    session.send("url", url)
     var headers = {
         'Prediction-Key': predictionKey,
         'Content-Type': 'application/octet-stream'
@@ -93,6 +95,7 @@ var imageDetection = function(session, name, url) {
                 processDetectionInfo(session, info);
             }
             else {
+                session.send("response.statusCode", response.statusCode);
                 console.log(response.statusCode)
             }
         })
@@ -141,6 +144,7 @@ var calculateCalorie = function(predictions) {
 }
 
 var processDetectionInfo = function(session, result) {
+    session.send("processDetectionInfo")
    var foods = []
    var calculateResult = calculateCalorie(result.predictions);
    session.send("I found foods " + calculateResult.tags.join(',') + ", total calories are " + calculateResult.totalCalorie);
