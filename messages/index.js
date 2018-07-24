@@ -170,7 +170,10 @@ bot.dialog('calculate', [
     function (session, args, next) {
         var msg = session.message;
         var attachment = msg.attachments[0];
-        imageDetection(session, attachment.name, attachment.contentUrl)
+        //var myPromise = new Promise(function(resolve, reject){
+            imageDetection(session, attachment.name, attachment.contentUrl)
+        //})
+        setTimeout(function() {}, 3000);
     },
 ]);
 
