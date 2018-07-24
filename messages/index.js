@@ -121,6 +121,7 @@ var calculateCalorie = (predictions) => {
    };
    var tmpCalorie = 0;
    var hasBoxTag = false;
+   var tmpTable = {};
 
    for (var prediction of predictions) {
       if (prediction.tagName in foodTable) {
@@ -128,11 +129,16 @@ var calculateCalorie = (predictions) => {
             continue;
          }
 
+         if (prediction.tagName in tmpTable) {
+            continue;
+         }
+
          ret.tags.push(
             foodTable[prediction.tagName].display
          );
-
+         tmpTable[prediction.tagName] = true;
          tmpCalorie += foodTable[prediction.tagName].calorie;
+
          if (prediction.tagName == boxTagName) {
             hasBoxTag = true;
          }
