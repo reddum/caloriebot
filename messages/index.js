@@ -80,26 +80,31 @@ if (predictionKey == null) {
 
 var imageDetection = function(session, name, url) {
 
-    session.send(url)
-    var headers = {
-        'Prediction-Key': predictionKey,
-        'Content-Type': 'application/octet-stream'
-    }
+    var myPromise = new Promise(function(resolve, reject){
+        session.send(url)
+        var headers = {
+            'Prediction-Key': predictionKey,
+            'Content-Type': 'application/octet-stream'
+        }
 
-    request.get(url).pipe(
-        request.post({ url: PredictImage, headers: headers }, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var info = JSON.parse(body);
-                console.log(info);
-                processDetectionInfo(session, info);
-            }
-            else {
-                session.send("response.statusCode")
-                session.send(response.statusCode);
-                console.log(response.statusCode)
-            }
-        })
-    )
+        request.get(url).pipe(
+            request.post({ url: PredictImage, headers: headers }, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = JSON.parse(body);
+                    console.log(info);
+                    processDetectionInfo(session, info);
+                    resolve()
+                }
+                else {
+                    session.send("response.statusCode")
+                    session.send(response.statusCode);
+                    console.log(response.statusCode)
+                }
+            })
+        )
+    })
+    Promise.all([myPromise])
+    
 }
 
 var calculateCalorie = function(predictions) {
@@ -160,7 +165,7 @@ var bot = new builder.UniversalBot(connector, function (session) {
     } else {
         if (msg.text.includes("show")) {
             session.send("Please see the report");
-            session.send("https://msit.powerbi.com/view?r=eyJrIjoiODgwOWRmYWUtODY3ZS00NTVlLWEwNTUtY2IwZGZhNTU1YTVhIiwidCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsImMiOjV9");
+            session.send("https://msit.powerbi.com/groups/d6578846-f8f7-4467-af3d-d2577a0d790f/reports/c50bf3de-1d6c-4a31-91f6-010b6e80d6f4/ReportSection?filter=user_pf~2Fu_id%20eq%20'5'");
         }   
     }
 });
@@ -169,10 +174,7 @@ bot.dialog('calculate', [
     function (session, args, next) {
         var msg = session.message;
         var attachment = msg.attachments[0];
-        //var myPromise = new Promise(function(resolve, reject){
-            imageDetection(session, attachment.name, attachment.contentUrl)
-        //})
-        setTimeout(function() {}, 3000);
+        imageDetection(session, attachment.name, attachment.contentUrl)
     },
 ]);
 
