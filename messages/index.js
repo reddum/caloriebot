@@ -150,7 +150,7 @@ var calculateCalorie = (predictions) => {
 var processDetectionInfo = (session, result) => {
    var foods = []
    var calculateResult = calculateCalorie(result.predictions);
-   session.send("我看到了 " + calculateResult.tags.join() + ", 總共 " + calculateResult.totalCalorie);
+   session.send("我看到了 " + calculateResult.tags.join() + ", 總共 " + calculateResult.totalCalorie + "大卡");
 }
 
 // Create your bot with a function to receive messages from the user
@@ -161,8 +161,9 @@ var bot = new builder.UniversalBot(connector, function (session) {
         var attachment = msg.attachments[0];
         imageDetection(session, attachment.name, attachment.contentUrl)
     } else {
-        // Echo back users text
-        session.send("You said: %s", session.message.text);
+        if (msg.text.includes("show")) {
+            session.send("You said: %s", session.message.text);
+        }   
     }
 });
 
