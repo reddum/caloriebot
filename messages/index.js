@@ -72,10 +72,6 @@ const PredictImageUrl = "https://southcentralus.api.cognitive.microsoft.com/cust
 const PredictImage = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/14f16d27-19d8-46fa-9516-d1f0d7865813/image?iterationId=9e2ff709-26b4-461d-8d53-f841ff3b289a"
 const predictionKey = process.env['PREDICITON_KEY']
 
-// const PredictImage = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/436679fe-5a12-4c17-a882-36b3eaeee242/image?iterationId=8ebb899f-779d-4d8f-8d17-3f72d4d6b22e"
-// const predictionKey = "9462f12ddd784b11be961574cc96de8e"
-
-
 if (predictionKey == null) {
     console.log("please set custom vision key")
     console.log("$export PREDICITON_KEY=${key}")
@@ -83,17 +79,6 @@ if (predictionKey == null) {
 }
 
 var imageDetection = async (session, name, url) => {
-
-    // session.send({
-    //     text: await imageDetection(attachment.contentUrl, null),
-    //     attachments: [
-    //         {
-    //             contentType: attachment.contentType,
-    //             contentUrl: attachment.contentUrl,
-    //             name: attachment.name
-    //         }
-    //     ]
-    // });
 
     var headers = {
         'Prediction-Key': predictionKey,
