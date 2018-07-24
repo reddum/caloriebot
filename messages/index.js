@@ -158,7 +158,7 @@ var calculateCalorie = (predictions) => {
 var processDetectionInfo = (session, result) => {
    var foods = []
    var calculateResult = calculateCalorie(result.predictions);
-   session.send("我看到了 " + calculateResult.tags.join() + ", 總共 " + calculateResult.totalCalorie);
+   session.send("I found foods " + calculateResult.tags.join(',') + ", total calories are " + calculateResult.totalCalorie);
 }
 
 // Create your bot with a function to receive messages from the user
