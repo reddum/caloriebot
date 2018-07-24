@@ -12,6 +12,7 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
     openIdMetadata: process.env['BotOpenIdMetadata']
 });
 
+var boxTagName = '便當';
 var foodTable = {
    '青菜': {
       'display': '青菜',
@@ -113,16 +114,43 @@ var imageDetection = async (session, name, url) => {
     )
 }
 
+var calculateCalorie = (predictions) => {
+   var ret = {
+      'tags': [],
+      'totalCalorie': 0
+   };
+   var tmpCalorie = 0;
+   var hasBoxTag = false;
+
+   for (var prediction of predictions) {
+      if (prediction.tagName in foodTable) {
+         if (0.15 > parseFloat(prediction.probability)) {
+            continue;
+         }
+
+         ret.tags.push(
+            foodTable[prediction.tagName].display
+         );
+
+         tmpCalorie += foodTable[prediction.tagName].calorie;
+         if (prediction.tagName == boxTagName) {
+            hasBoxTag = true;
+         }
+      }
+   }
+
+   if (tmpCalorie < foodTable[boxTagName].calorie) {
+      tmpCalorie = foodTable[boxTagName].calorie;
+   }
+
+   ret.totalCalorie = tmpCalorie;
+   return ret;
+}
+
 var processDetectionInfo = (session, result) => {
-    var foods = []
-    for (var prediction of result.predictions) {
-        var tagName = prediction.tagName
-        var probability = parseFloat(prediction.probability)
-        if (probability > 0.15) {
-            foods.push(tagName)
-        }
-    }
-    session.send("我看到了" + foods.join())
+   var foods = []
+   var calculateResult = calculateCalorie(result.predictions);
+   session.send("我看到了 " + calculateResult.tags.join() + ", 總共 " + calculateResult.totalCalorie);
 }
 
 // Create your bot with a function to receive messages from the user
