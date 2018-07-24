@@ -81,7 +81,9 @@ if (predictionKey == null) {
 var imageDetection = function(session, name, url) {
 
     var myPromise = new Promise(function(resolve, reject){
-        session.send(url)
+        session.send("here")
+        session.send("here1")
+        session.send("here2")
         
         var headers = {
             'Prediction-Key': predictionKey,
@@ -89,28 +91,23 @@ var imageDetection = function(session, name, url) {
         }
 
         request
-        .get(url)
-        .on('response', function(response) {
-            session.send("response") // 200
-            session.send(response) // 200
-          })
-        .on('error', function(err) {
-            session.send('error')
-            session.send(err)
-          })
+        .get({url: url},function (error, response, body) {
+            session.send("get response")
+        })
         .pipe(
             request.post({ url: PredictImage, headers: headers }, function (error, response, body) {
+                session.send("post response")
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     console.log(info);
                     processDetectionInfo(session, info);
-                    resolve()
                 }
                 else {
                     session.send("response.statusCode")
                     session.send(response.statusCode);
                     console.log(response.statusCode)
                 }
+                resolve()
             })
         )
     })
