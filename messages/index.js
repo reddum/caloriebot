@@ -15,47 +15,47 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
 var boxTagName = '便當';
 var foodTable = {
    '青菜': {
-      'display': '青菜',
+      'display': 'Vegetables',
       'calorie': 75
    },
    '便當': {
-      'display': '便當',
+      'display': 'boxed meal',
       'calorie': 705
    },
    '港式叉燒': {
-      'display': '港式叉燒',
+      'display': 'Hong Kong-style Pork Roast',
       'calorie': 392
    },
    '滷排骨': {
-      'display': '滷排骨',
+      'display': 'braised pork ribs',
       'calorie': 131
    },
    '炸排骨': {
-      'display': '炸排骨',
+      'display': 'Fried ribs',
       'calorie': 88
    },
    '炸雞腿': {
-      'display': '炸雞腿',
+      'display': 'Fried chicken',
       'calorie': 246
    },
    '烤雞腿': {
-      'display': '烤雞腿',
+      'display': 'Roast chicken',
       'calorie': 101
    },
    '荷包蛋': {
-      'display': '荷包蛋',
+      'display': 'Poached egg',
       'calorie': 91
    },
    '蛋': {
-      'display': '蛋',
+      'display': 'Egg',
       'calorie': 85
    },
    '豆乾': {
-      'display': '豆乾',
+      'display': 'Dried bean',
       'calorie': 88
    },
    '魚排': {
-      'display': '魚排',
+      'display': 'Fish steak',
       'calorie': 75
    }
 };
@@ -129,7 +129,12 @@ var calculateCalorie = (predictions) => {
             continue;
          }
 
-         if (prediction.tagName in tmpTable) {
+         if (prediction.tagName == boxTagName) {
+            hasBoxTag = true;
+         }
+
+         if (prediction.tagName in tmpTable ||
+               prediction.tagName == boxTagName) {
             continue;
          }
 
@@ -139,9 +144,6 @@ var calculateCalorie = (predictions) => {
          tmpTable[prediction.tagName] = true;
          tmpCalorie += foodTable[prediction.tagName].calorie;
 
-         if (prediction.tagName == boxTagName) {
-            hasBoxTag = true;
-         }
       }
    }
 
