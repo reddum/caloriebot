@@ -103,11 +103,15 @@ var imageDetection = function(session, name, url) {
         //         }
         //     })
         // )
-        setTimeout(function(){session.send("pass"), 3000})
+        setTimeout(function(){
+            session.send("pass");
+            resolve();
+        }, 3000)
     })
-    // Promise.all([myPromise]).then(function() {
-    //     session.send("done")
-    // })
+    Promise.all([myPromise]).then(function() {
+        session.send("done")
+    })
+    session.send("here")
     
 }
 
