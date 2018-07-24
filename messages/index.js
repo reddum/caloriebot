@@ -80,9 +80,8 @@ if (predictionKey == null) {
 
 var imageDetection = function(session, name, url) {
 
-    session.send("name", name)
-    session.send(name)
-    session.send("url", url) 
+    session.send("name")
+    session.send("url") 
     session.send(url)
     var headers = {
         'Prediction-Key': predictionKey,
