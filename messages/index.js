@@ -78,7 +78,7 @@ if (predictionKey == null) {
     //return;
 }
 
-var imageDetection = async (session, name, url) => {
+var imageDetection = function(session, name, url) {
 
     var headers = {
         'Prediction-Key': predictionKey,
@@ -99,7 +99,7 @@ var imageDetection = async (session, name, url) => {
     )
 }
 
-var calculateCalorie = (predictions) => {
+var calculateCalorie = function(predictions) {
    var ret = {
       'tags': [],
       'totalCalorie': 0
@@ -140,7 +140,7 @@ var calculateCalorie = (predictions) => {
    return ret;
 }
 
-var processDetectionInfo = (session, result) => {
+var processDetectionInfo = function(session, result) {
    var foods = []
    var calculateResult = calculateCalorie(result.predictions);
    session.send("I found foods " + calculateResult.tags.join(',') + ", total calories are " + calculateResult.totalCalorie);
