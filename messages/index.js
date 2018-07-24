@@ -155,7 +155,8 @@ var bot = new builder.UniversalBot(connector, function (session) {
         imageDetection(session, attachment.name, attachment.contentUrl)
     } else {
         if (msg.text.includes("show")) {
-            session.send("You said: %s", session.message.text);
+            session.send("Please see the report");
+            session.send("https://msit.powerbi.com/view?r=eyJrIjoiODgwOWRmYWUtODY3ZS00NTVlLWEwNTUtY2IwZGZhNTU1YTVhIiwidCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsImMiOjV9");
         }   
     }
 });
