@@ -75,7 +75,7 @@ const predictionKey = process.env['PREDICITON_KEY']
 if (predictionKey == null) {
     console.log("please set custom vision key")
     console.log("$export PREDICITON_KEY=${key}")
-    return;
+    //return;
 }
 
 var imageDetection = async (session, name, url) => {
